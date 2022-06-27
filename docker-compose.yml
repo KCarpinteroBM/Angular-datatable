@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - web_data:/assets
+  script:
+    #build: .
+    image: cron/script:latest
+    volumes:
+      - web_data:/data
+volumes:
+  web_data:
+    external: true

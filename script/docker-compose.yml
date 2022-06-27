@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    #image: cron/script:latest
+    volumes:
+      - ./src/assets:/data
+  script:
+    #build: .
+    image: cron/script:latest
+    volumes:
+      - ./src/assets:/data

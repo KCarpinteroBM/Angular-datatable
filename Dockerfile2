@@ -1,0 +1,40 @@
+FROM python:3.8-buster
+#Define the working directory within a container
+WORKDIR /app
+RUN apt-get update && apt-get install -y cron
+COPY script/script.py /bin/my_python
+COPY script/root /tmp/root.crontab
+RUN crontab /tmp/root.crontab
+RUN chmod +x /bin/my_python
+
+
+ENV NODE_VERSION=14.19.1
+RUN apt install -y curl
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+
+
+
+#Define an Environment variable called path 
+ENV PATH /app/node_modules/.bin:$PATH
+
+#Copy package.json file in to the container to install all the dependencies
+COPY package.json /app/package.json
+
+#Install angular and all the dependencies
+RUN npm install
+RUN npm install -g @angular/cli
+
+#Copy the project inside the container
+COPY . /app
+#RUN rm -rf /src/assets/sample.json
+#Run the python script to generate the data
+#RUN python script.py
+CMD ["cron", "-L 2", "-f"]
+EXPOSE 4200
+RUN ng serve --host 0.0.0.0
+#Deploy the service
