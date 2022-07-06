@@ -1,8 +1,8 @@
 <p>Tests Component</p>
-<div class="container">
+<div class="container-fluid">
     <div class="card m-5 p-3">
         <div class="card-body">
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover" datatable>
                 <thead>
                 <tr>
                     <th>Relation</th>
@@ -11,6 +11,7 @@
                     <th>score</th>
                     <th>baseTitle</th>
                     <th>checkTitle</th>
+                    <th>status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -21,10 +22,13 @@
                     <td>{{ test.score }}</td>
                     <td>{{ test.baseTitle }}</td>
                     <td>{{ test.checkTitle }}</td>
+                    <td *ngIf="test.status==1" class="one">{{ "Alta probabilidad"}}</td>
+                    <td *ngIf="test.status==2" class="two">{{ "Bastante probabilidad"}}</td>
+                    <td *ngIf="test.status==3" class="three">{{ "Alguna probabilidad"}}</td>
+                    <td *ngIf="test.status==4" class="four">{{ "Poca probabilidad"}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>

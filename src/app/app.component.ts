@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import Sample from '../assets/sample.json';
+import {DataTableDirective} from 'angular-datatables';
+
 
 let data = Sample;
 @Component({
@@ -9,13 +11,14 @@ let data = Sample;
 })
 export class AppComponent {
   title = 'angular-datatable';
-  data: { relation: string; positive: number; negative: number; score: number; baseTitle: string; checkTitle: string; number: number; issuesLists: string; detectedPart: string; }[];
-  
+  data: { relation: string; positive: number; negative: number; score: number; baseTitle: string; checkTitle: string; number: number; issuesLists: string; detectedPart: string; status:number }[];
   constructor() { 
     this.data = data;
   }
 
   ngOnInit(): void {
-    console.log(data)
+    
   }
+
+
 }
